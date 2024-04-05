@@ -6,10 +6,10 @@ using static GenerateImage;
 public class GenerateImage : MonoBehaviour
 {
     public Texture2D target;
-    public int popMax;
+    public int populationMax;
     public float mutationRate;
 
-    [Range(1,500)]
+    [Range(1, 500), Tooltip("Determines how many samples are being taken. A lower value results in a higher quality result but is also more expensive to calculate")]
     public int targetSplitIncrement;
 
     public int gridWidth;
@@ -55,7 +55,7 @@ public class GenerateImage : MonoBehaviour
                 splitTargetTexture.SetPixels(splitTargetColors);
                 splitTargetTexture.Apply();
 
-                Population splitPopulation = new Population(splitTargetTexture, popMax, mutationRate);
+                Population splitPopulation = new Population(splitTargetTexture, populationMax, mutationRate);
 
                 splitTargetInfo.texture = splitTargetTexture;
                 splitTargetInfo.population = splitPopulation;
@@ -124,12 +124,12 @@ public class GenerateImage : MonoBehaviour
     public void GeneratePlanes()
     {
         planes.Clear();
-        int height = Mathf.CeilToInt((float)popMax / gridWidth);
+        int height = Mathf.CeilToInt((float)populationMax / gridWidth);
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < gridWidth; x++)
             {
-                if (y * gridWidth + x >= popMax)
+                if (y * gridWidth + x >= populationMax)
                 {
                     // Exit if grid would generate more cells than elements in population
                     break;
