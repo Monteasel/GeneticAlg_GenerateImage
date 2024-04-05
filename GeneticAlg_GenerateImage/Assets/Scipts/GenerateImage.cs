@@ -6,14 +6,14 @@ using static GenerateImage;
 public class GenerateImage : MonoBehaviour
 {
     public Texture2D target;
-    public int populationMax;
-    public float mutationRate;
+    public int populationMax = 4;
+    public float mutationRate = 0.05f;
 
     [Range(1, 500), Tooltip("Determines how many samples are being taken. A lower value results in a higher quality result but is also more expensive to calculate")]
-    public int targetSplitIncrement;
+    public int targetSplitIncrement = 8;
 
-    public int gridWidth;
-    public float elementDisplayGap;
+    public int gridWidth = 10;
+    public float elementDisplayGap = 4;
 
     List<SplitTargetInfo> splitTargetInfoList = new List<SplitTargetInfo>();
     List<GameObject> planes = new List<GameObject>();
@@ -22,12 +22,6 @@ public class GenerateImage : MonoBehaviour
 
     private void Start()
     {
-        /*testSTI = new SplitTargetInfo();
-        Population testP = new Population(target, popMax, mutationRate);
-        testSTI.population = testP;
-        testSTI.originalTargetX = 0;
-        testSTI.originalTargetY = 0;*/
-
         for (int targetY = 0; targetY < target.height; targetY+=targetSplitIncrement)
         {
             for(int targetX = 0; targetX < target.width; targetX+=targetSplitIncrement)
@@ -68,19 +62,6 @@ public class GenerateImage : MonoBehaviour
 
     private void Update()
     {
-        // Comment rest for whole target to be target
-        /*if (testSTI.population.avgFitness < 0.95)
-        {
-            UpdateSplitPopulationDisplay(testSTI);
-            Draw(testSTI.population);
-        }
-        else
-        {
-            Time.timeScale = 0;
-        }*/
-
-        // Comment rest for target to be split
-
         for(int i = 0; i < planes.Count; i++)
         {
             UpdateMaybeBetter(i);
@@ -98,20 +79,6 @@ public class GenerateImage : MonoBehaviour
                 Time.timeScale = 0;
             }
         }
-
-        /*for(int i = 0; i < splitTargetInfoList.Count; i++)
-        {
-            Population currentPopulation = splitTargetInfoList[i].population;
-            if (currentPopulation.avgFitness < 0.95)
-            {
-                UpdateSplitPopulationDisplay(splitTargetInfoList[i]);
-                Draw(currentPopulation);
-            }
-            else
-            {
-                Time.timeScale = 0;
-            }
-        }*/
     }
 
     public void Draw(Population p)
